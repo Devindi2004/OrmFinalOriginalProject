@@ -30,11 +30,11 @@
 
         <!-- Input Form -->
         <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="229.0" prefWidth="850.0" spacing="30" stylesheets="@../css/Instructor.css">
-         <AnchorPane prefHeight="229.0" prefWidth="186.0">
+         <AnchorPane prefHeight="229.0" prefWidth="154.0">
             <children>
-               <ImageView fitHeight="48.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fx:id="backButtonId" fitHeight="51.0" fitWidth="41.0" layoutX="14.0" layoutY="101.0" onMouseClicked="#handleBackButton" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../../../../../Downloads/back.png" />
+                     <Image url="@image/icons8-back-arrow.gif" />
                   </image>
                </ImageView>
             </children>

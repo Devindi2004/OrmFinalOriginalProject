@@ -4,14 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import org.example.ormfinalproject.BO.custom.BOFactory;
 import org.example.ormfinalproject.BO.custom.CourseBO;
 import org.example.ormfinalproject.model.CourseDTO;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -19,6 +26,7 @@ import java.util.Optional;
 public class CoursePageController {
 
 
+    public ImageView backButtonId;
     CourseBO courseBO = (CourseBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.COURSE);
 
     @FXML
@@ -210,5 +218,16 @@ public class CoursePageController {
 
     public void backButton(MouseEvent mouseEvent) {
 
+    }
+
+    public void handleBackButton(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashBoard.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.centerOnScreen();
+        stage.setTitle("Dashboard");
+        stage.show();
     }
 }

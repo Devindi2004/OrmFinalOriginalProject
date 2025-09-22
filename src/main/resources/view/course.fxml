@@ -22,6 +22,17 @@
 
         <!-- Header -->
         <Label alignment="CENTER" maxWidth="Infinity" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: linear-gradient(to right, #3b4cca, #6b7280); -fx-background-radius: 10; -fx-padding: 15;" text="Course Management">
+
+            <AnchorPane prefHeight="395.0" prefWidth="166.0">
+                <ImageView fx:id="backButtonId" fitHeight="51.0" fitWidth="41.0" layoutX="14.0" layoutY="177.0" onMouseClicked="#handleBackButton" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../view/image/icons8-back-arrow.gif" />
+                    </image>
+                </ImageView>
+
+
+            </AnchorPane>
+
             <font><Font name="System Bold" size="24.0" /></font>
             <tooltip><Tooltip text="Course Management Dashboard" /></tooltip>
         </Label>
@@ -30,10 +41,14 @@
 
         <!-- Input Form -->
         <HBox fx:id="imagehbox" alignment="CENTER" maxWidth="Infinity" spacing="30" stylesheets="@../css/Student.css">
-            <ImageView fx:id="backButton" fitHeight="41.0" fitWidth="68.0" onMouseClicked="#backButton" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../../../../../../Downloads/back.png" />
-            </ImageView>
-         <AnchorPane prefHeight="226.0" prefWidth="124.0" />
+         <AnchorPane prefHeight="226.0" prefWidth="128.0">
+            <children>
+               <ImageView fx:id="backButtonId1" fitHeight="51.0" fitWidth="41.0" layoutX="14.0" layoutY="106.0" onMouseClicked="#handleBackButton" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@image/icons8-back-arrow.gif" />
+                  </image>
+               </ImageView>
+            </children></AnchorPane>
             <GridPane alignment="CENTER" hgap="15" prefHeight="220.0" prefWidth="438.0" style="-fx-padding: 20; -fx-background-color: #f9fafb; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" vgap="15">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="30" />
