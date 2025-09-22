@@ -10,4 +10,19 @@ public class PaymentBOImpl implements PaymentBO {
     public ArrayList<PaymentDTO> getAllPayment() {
         return null;
     }
+
+    @Override
+    public boolean delete(Long id) {
+        return false;
+    }
+
+    @Override
+    public boolean save(PaymentDTO paymentDTO) {
+        return false;
+    }
+
+    @Override
+    public boolean update(PaymentDTO paymentDTO) {
+        return false;
+    }
 }

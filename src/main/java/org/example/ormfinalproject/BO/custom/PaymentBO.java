@@ -7,4 +7,10 @@ import java.util.ArrayList;
 
 public interface PaymentBO extends SuperBO {
     ArrayList<PaymentDTO> getAllPayment();
+
+    boolean delete(Long id);
+
+    boolean save(PaymentDTO paymentDTO);
+
+    boolean update(PaymentDTO paymentDTO);
 }

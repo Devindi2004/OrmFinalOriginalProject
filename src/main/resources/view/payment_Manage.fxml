@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="756.0" prefWidth="950.0" style="-fx-background-color: linear-gradient(to bottom right, #e0e7ff, #ffffff);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ormfinalproject.controller.StudentPageController">
+<AnchorPane prefHeight="756.0" prefWidth="950.0" style="-fx-background-color: linear-gradient(to bottom right, #e0e7ff, #ffffff);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ormfinalproject.controller.PaymentController">
     <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" VBox.vgrow="ALWAYS">
 
         <!-- Title -->
@@ -30,6 +32,11 @@
 
         <!-- Form and Image Section -->
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="30" stylesheets="@../css/Student.css">
+            <AnchorPane prefHeight="351.0" prefWidth="136.0">
+                <ImageView fx:id="backButtonId" fitHeight="51.0" fitWidth="41.0" layoutY="135.0" onMouseClicked="#handleBackButton" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@image/icons8-back-arrow.gif" />
+                </ImageView>
+            </AnchorPane>
             <GridPane alignment="CENTER" hgap="15" prefHeight="395.0" prefWidth="472.0" style="-fx-padding: 20; -fx-background-color: #f9fafb; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" vgap="15">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="30" />
@@ -93,7 +100,6 @@
 
             <!-- Placeholder for Image or Additional Content -->
             <VBox alignment="CENTER" spacing="10" style="-fx-padding: 20;">
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #3b4cca;" text="Student Profile" />
                 <!-- Removed ImageView; can add dynamic content or placeholder -->
                 <Label style="-fx-text-fill: #6b7280;" text="No Image Available" />
             </VBox>
@@ -120,7 +126,7 @@
         </HBox>
 
         <!-- Payment Table -->
-        <TableView fx:id="tblStudent" onMouseClicked="#tableClickOnAction" prefHeight="178.0" prefWidth="870.0" style="-fx-background-color: #ffffff; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-table-cell-border-color: transparent;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblPayment" onMouseClicked="#tableClickOnAction" prefHeight="178.0" prefWidth="870.0" style="-fx-background-color: #ffffff; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-table-cell-border-color: transparent;" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="clmPaymentId" minWidth="100" prefWidth="100" text="Payment ID" />
                 <TableColumn fx:id="clmStudentId" minWidth="140" prefWidth="140" text="Student ID" />

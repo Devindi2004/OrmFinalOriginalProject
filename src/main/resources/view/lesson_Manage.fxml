@@ -7,6 +7,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -28,6 +30,15 @@
 
         <!-- Input Form -->
         <HBox alignment="CENTER" maxWidth="Infinity" spacing="30" stylesheets="@../css/Student.css">
+         <AnchorPane prefHeight="378.0" prefWidth="152.0">
+            <children>
+               <ImageView fx:id="backButtonId" fitHeight="41.0" fitWidth="45.0" layoutY="148.0" onMouseClicked="#handleBackButton" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@image/icons8-back-arrow.gif" />
+                  </image>
+               </ImageView>
+            </children>
+         </AnchorPane>
             <GridPane alignment="CENTER" hgap="15" style="-fx-padding: 20; -fx-background-color: #f9fafb; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" vgap="15">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="30" />

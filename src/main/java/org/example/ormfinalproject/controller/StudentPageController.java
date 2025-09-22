@@ -213,7 +213,6 @@ public class StudentPageController {
 
         boolean isUpdate = studentBO.update(studentDTO);
         if (isUpdate) {
-            //setNextId();
             loadtable();
             new Alert(Alert.AlertType.INFORMATION, "Updated Successfully").show();
         }else {
