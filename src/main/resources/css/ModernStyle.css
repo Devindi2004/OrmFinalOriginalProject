@@ -1,0 +1,71 @@
+/* src/main/resources/org/example/ormfinalproject/css/ModernStyle.css */
+
+/* Button styles */
+.button {
+    -fx-background-color: linear-gradient(to right, #3b4cca, #6b7280);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #2a2e8a, #4b5563);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Sidebar button styles */
+.sidebar-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #3b4cca;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #e0e7ff;
+    -fx-text-fill: #3b4cca;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Label styles */
+.label {
+    -fx-text-fill: #1f2937;
+}
+
+/* TextField and PasswordField styles */
+.text-field, .password-field {
+    -fx-background-radius: 5;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 5;
+    -fx-background-color: #ffffff;
+    -fx-transition: all 0.3s ease;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3b4cca;
+    -fx-effect: dropshadow(gaussian, rgba(59, 76, 202, 0.3), 5, 0, 0, 1);
+}
+
+/* TableView styles */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: linear-gradient(to right, #3b4cca, #6b7280);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

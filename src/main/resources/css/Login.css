@@ -1,0 +1,109 @@
+/* Modern CSS for Login Page - User-Friendly Light Theme */
+
+.root {
+    -fx-font-family: "System", sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Text Fields and Password Fields */
+.text-field, .password-field {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+    -fx-border-width: 1;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 10;
+    -fx-padding: 12 15;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 1);
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.2), 8, 0, 0, 2);
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+/* Modern Login Button */
+.login-button {
+    -fx-background-color: linear-gradient(to right, #3b82f6, #60a5fa);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-padding: 12 30;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
+    -fx-min-width: 120;
+    -fx-min-height: 45;
+}
+
+.login-button:hover {
+    -fx-background-color: linear-gradient(to right, #2563eb, #3b82f6);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 3);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.login-button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+/* Modern Register Button */
+.register-button {
+    -fx-background-color: linear-gradient(to right, #10b981, #34d399);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-padding: 12 30;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
+    -fx-min-width: 120;
+    -fx-min-height: 45;
+}
+
+.register-button:hover {
+    -fx-background-color: linear-gradient(to right, #059669, #10b981);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 3);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.register-button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+/* Forgot Password Link */
+.label:hover {
+    -fx-text-fill: #2563eb;
+    -fx-transition: color 0.2s ease-in-out;
+}
+
+/* GridPane Form Styling */
+.gridpane {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 4);
+    -fx-border-color: #e0f2fe;
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+}
+
+/* Overall VBox Padding and Spacing for User-Friendliness */
+.vbox {
+    -fx-spacing: 30;
+    -fx-padding: 50;
+}
