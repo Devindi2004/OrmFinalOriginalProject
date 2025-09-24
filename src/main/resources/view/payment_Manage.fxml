@@ -63,17 +63,11 @@
                 <Label text="Student ID" GridPane.columnIndex="0" GridPane.rowIndex="1">
                     <font><Font name="System Bold" size="14.0" /></font>
                 </Label>
-                <TextField fx:id="txtStudentId" promptText="Enter Student Id" style="-fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <tooltip><Tooltip text="Student's full name" /></tooltip>
-                </TextField>
 
                 <!-- Email -->
                 <Label text="Course ID" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <font><Font name="System Bold" size="14.0" /></font>
                 </Label>
-                <TextField fx:id="txtCourseId" promptText="Enter Course Id" style="-fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <tooltip><Tooltip text="Student's email address" /></tooltip>
-                </TextField>
 
                 <!-- Phone -->
                 <Label text="Amount" GridPane.columnIndex="0" GridPane.rowIndex="3">
@@ -96,6 +90,8 @@
                     <tooltip><Tooltip text="Date of registration" /></tooltip>
                 </DatePicker>
             <ComboBox fx:id="cbMethod" prefHeight="26.0" prefWidth="294.0" promptText="Select Your Payment Method" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="cbStudentID" prefHeight="26.0" prefWidth="310.0" promptText="Enter Sturent ID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbCourseid" layoutX="170.0" layoutY="89.0" prefHeight="26.0" prefWidth="310.0" promptText="Enter Course Id" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </GridPane>
 
             <!-- Placeholder for Image or Additional Content -->

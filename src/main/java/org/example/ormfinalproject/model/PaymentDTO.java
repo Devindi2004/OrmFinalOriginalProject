@@ -1,9 +1,5 @@
 package org.example.ormfinalproject.model;
 
-import org.example.ormfinalproject.BO.custom.PaymentBO;
-
-import java.util.ArrayList;
-
 import  lombok.*;
 @AllArgsConstructor
 @Getter
@@ -23,4 +19,12 @@ private String amount;
 private String paymentMethod;
 
 
+    public PaymentDTO(int paymentId, String paymentDate, int studentId, String paymentMethod, String amount) {
+        this.paymentId = paymentId;
+        this.studentId = studentId;
+        this.courseId = courseId;
+        this.paymentDate = paymentDate;
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
+    }
 }

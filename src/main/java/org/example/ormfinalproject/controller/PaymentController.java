@@ -21,6 +21,7 @@ import org.example.ormfinalproject.model.PaymentDTO;
 import org.example.ormfinalproject.model.StudentDTO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -28,6 +29,8 @@ import java.util.Optional;
 
 public class PaymentController {
 
+    public ComboBox cbStudentID;
+    public ComboBox cbCourseid;
     PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PAYMENT);
 
     @FXML
@@ -46,7 +49,7 @@ public class PaymentController {
     private Button btnUpdate;
 
     @FXML
-    private ComboBox<?> cbMethod;
+    private ComboBox<String> cbMethod;
 
     @FXML
     private TableColumn<?, ?> clmAmount;
@@ -87,12 +90,18 @@ public class PaymentController {
     @FXML
     private TextField txtStudentId;
 
-    public void initialize() {
+    public void initialize() throws SQLException, ClassNotFoundException {
         loadtable();
         setCellValueFactory();
+        setPaymentComboBox();
     }
 
-    private void loadtable() {
+    private void setPaymentComboBox() {
+        ObservableList<String> paymentMethods = FXCollections.observableArrayList("Cash", "Card", "Online");
+        cbMethod.setItems(paymentMethods);
+    }
+
+    private void loadtable() throws SQLException, ClassNotFoundException {
         ArrayList<PaymentDTO> paymentDTOS = paymentBO.getAllPayment();
 
         ObservableList<PaymentDTO> data = FXCollections.observableArrayList();
@@ -128,15 +137,15 @@ public class PaymentController {
     @FXML
     void handleClear(ActionEvent event) {
         txtPaymentId.clear();
-        txtStudentId.clear();
-        txtCourseId.clear();
+        cbStudentID.setValue(null);
+        cbCourseid.setValue(null);
         txtAmount.clear();
         cbMethod.setValue(null);
         dpPaymentDate.setValue(null);
     }
 
     @FXML
-    void handleDeletePayment(ActionEvent event) {
+    void handleDeletePayment(ActionEvent event) throws SQLException, ClassNotFoundException {
         Long id = Long.valueOf(txtStudentId.getText());
 
         if (id == null) {
@@ -165,10 +174,10 @@ public class PaymentController {
     }
 
     @FXML
-    void handleSavePayment(ActionEvent event) {
+    void handleSavePayment(ActionEvent event) throws SQLException, ClassNotFoundException {
        String paymentId = txtPaymentId.getText();
-       String studentId = txtStudentId.getText();
-       String courseId = txtCourseId.getText();
+       String studentId = cbStudentID.getValue().toString();
+       String courseId = cbCourseid.getValue().toString();
        String amount = txtAmount.getText();
        String paymentMethod = cbMethod.getValue().toString();
        String paymentDate = dpPaymentDate.getValue().toString();
@@ -194,10 +203,10 @@ public class PaymentController {
     }
 
     @FXML
-    void handleUpdatePayment(ActionEvent event) {
+    void handleUpdatePayment(ActionEvent event) throws SQLException, ClassNotFoundException {
         String paymentId = txtPaymentId.getText();
-        String studentId = txtStudentId.getText();
-        String courseId = txtCourseId.getText();
+        String studentId = cbStudentID.getValue().toString();
+        String courseId = cbCourseid.getValue().toString();
         String amount = txtAmount.getText();
         String paymentMethod = cbMethod.getValue().toString();
         String paymentDate = dpPaymentDate.getValue().toString();
@@ -226,12 +235,12 @@ public class PaymentController {
         PaymentDTO selectedItem = tblPayment.getSelectionModel().getSelectedItem();
 
         if (selectedItem != null) {
-            txtStudentId.setText(String.valueOf(selectedItem.getStudentId()));
-            txtStudentId.setText(String.valueOf(selectedItem.getStudentId()));
             txtPaymentId.setText(String.valueOf(selectedItem.getPaymentId()));
-            txtCourseId.setText(String.valueOf(selectedItem.getCourseId()));
             txtAmount.setText(String.valueOf(selectedItem.getAmount()));
             dpPaymentDate.setValue(LocalDate.parse(selectedItem.getPaymentDate()));
+            cbStudentID.setValue(selectedItem.getStudentId());
+            cbCourseid.setValue(selectedItem.getCourseId());
+            cbMethod.setValue(selectedItem.getPaymentMethod());
         }
     }
 
