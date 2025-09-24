@@ -14,4 +14,6 @@ public interface CourseBO extends SuperBO {
     boolean save(CourseDTO courseDTO) throws SQLException, ClassNotFoundException;
 
     ArrayList<CourseDTO> getAllCourse() throws SQLException, ClassNotFoundException;
+
+
 }

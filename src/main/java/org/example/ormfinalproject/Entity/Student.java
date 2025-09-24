@@ -26,4 +26,8 @@ public class Student {
 
     @Column(name = "registration_date")
     private String registrationDate;
+
+    public Student(long studentId) {
+        this.studentId = studentId;
+    }
 }

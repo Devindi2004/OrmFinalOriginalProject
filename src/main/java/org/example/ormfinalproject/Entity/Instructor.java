@@ -27,4 +27,8 @@ public class Instructor {
 
     @Column(nullable = true, length = 100)
     private String availability;
+
+    public Instructor(long instructorId) {
+        this.instructorId = instructorId;
+    }
 }

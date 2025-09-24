@@ -3,30 +3,29 @@ package org.example.ormfinalproject.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+import java.sql.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
+@Data
 @Entity
-@Table(name = "lesson")
+@Table(name = "lessons")
 public class Lesson {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lesson_id")
-    private int lessonId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long lessonId;
 
-    private String date;
+    @Column(nullable = false)
+    private Date date;
 
+    @Column(nullable = false)
     private String time;
 
+    @Column(nullable = false)
     private String status;
-
-    // 🔑 Relationships
-
-    @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
@@ -35,4 +34,8 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 }

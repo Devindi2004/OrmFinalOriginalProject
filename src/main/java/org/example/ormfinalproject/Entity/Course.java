@@ -24,4 +24,8 @@ public class Course {
 
     @Column(nullable = false, length = 100)
     private String fee;
+
+    public Course(long courseId) {
+        this.courseId = courseId;
+    }
 }
