@@ -5,15 +5,19 @@ import org.example.ormfinalproject.model.CourseDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface CourseBO extends SuperBO {
     boolean update(CourseDTO courseDTO) throws SQLException, ClassNotFoundException;
 
     boolean delete(Long id) throws SQLException, ClassNotFoundException;
 
-    boolean save(CourseDTO courseDTO) throws SQLException, ClassNotFoundException;
+    List<CourseDTO> getAllCourses() throws SQLException, ClassNotFoundException;
+
+    boolean save(CourseDTO courseDTO) throws SQLException, ClassNotFoundException, Exception;
 
     ArrayList<CourseDTO> getAllCourse() throws SQLException, ClassNotFoundException;
 
 
+    boolean delete(String id) throws Exception;
 }

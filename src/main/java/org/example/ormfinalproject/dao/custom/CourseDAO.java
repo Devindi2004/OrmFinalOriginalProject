@@ -4,4 +4,6 @@ import org.example.ormfinalproject.dao.CrudDAO;
 import org.example.ormfinalproject.Entity.Course;
 
 public interface CourseDAO extends CrudDAO<Course> {
+
+    Course findById(long id) throws Exception;
 }

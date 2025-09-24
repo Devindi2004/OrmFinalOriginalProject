@@ -115,4 +115,9 @@ public class InstructorDAOImpl implements InstructorDAO {
             return false; // student not found
         }
     }
+    public Instructor findById(long id) throws Exception {
+        try (Session session = FactoryConfigaration.getInstance().getSession().getSessionFactory().openSession()) {
+            return session.get(Instructor.class, id);
+        }
+    }
 }

@@ -6,68 +6,131 @@ import org.example.ormfinalproject.Entity.Instructor;
 import org.example.ormfinalproject.Entity.Lesson;
 import org.example.ormfinalproject.Entity.Student;
 import org.example.ormfinalproject.dao.DAOFactory;
+import org.example.ormfinalproject.dao.custom.CourseDAO;
+import org.example.ormfinalproject.dao.custom.InstructorDAO;
 import org.example.ormfinalproject.dao.custom.LessonDAO;
+import org.example.ormfinalproject.dao.custom.StudentDAO;
 import org.example.ormfinalproject.model.LessonDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class LessonBOImpl implements LessonBO {
 
-
-    LessonDAO lessonDAO = (LessonDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.LESSON);
-
-    @Override
-    public ArrayList<LessonDTO> getAllLesson() throws SQLException, ClassNotFoundException {
-        ArrayList<Lesson> lessons = lessonDAO.getAll();
-        ArrayList<LessonDTO> lessonDTOS = new ArrayList<>();
-        for (Lesson l : lessons) {
-            lessonDTOS.add(new LessonDTO(
-                    l.getLessonId(),
-                    l.getDate(),
-                    l.getTime(),
-                    l.getStatus(),
-                    l.getCourse().getCourseId(),
-                    l.getInstructor().getInstructorId(),
-                    l.getStudent().getStudentId()
-            ));
-        }
-        return lessonDTOS;
-    }
+    private final LessonDAO lessonDAO = (LessonDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.LESSON);
+    private final InstructorDAO instructorDAO = (InstructorDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.INSTRUCTOR);
+    private final CourseDAO courseDAO = (CourseDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.COURSE);
+    private final StudentDAO studentDAO = (StudentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.STUDENT);
 
 
     @Override
-    public boolean save(LessonDTO lessonDTO) throws SQLException, ClassNotFoundException {
-        Lesson lesson = new Lesson();
-        lesson.setDate(lessonDTO.getDate());
-        lesson.setTime(lessonDTO.getTime());
-        lesson.setStatus(lessonDTO.getStatus());
-        lesson.setCourse(new Course(lessonDTO.getCourseId()));
-        lesson.setInstructor(new Instructor(lessonDTO.getInstructorId()));
-        lesson.setStudent(new Student(lessonDTO.getStudentId()));
+    public boolean saveLesson(LessonDTO dto) throws Exception {
+        Instructor instructor = instructorDAO.findById(dto.getInstructorId());
+        Course  course = courseDAO.findById(dto.getCourseId());
+        Student student = studentDAO.findById(dto.getStudentId());
+        Lesson lesson = new Lesson(
+            dto.getLessonId(),
+                dto.getDate(),
+                dto.getTime(),
+                dto.getStatus(),
+                student,
+                course,
+                instructor
+        );
         return lessonDAO.save(lesson);
     }
 
     @Override
-    public boolean update(LessonDTO lessonDTO) throws SQLException, ClassNotFoundException {
-        Lesson lesson = new Lesson();
-        lesson.setLessonId(lessonDTO.getLessonId());
-        lesson.setDate(lessonDTO.getDate());
-        lesson.setTime(lessonDTO.getTime());
-        lesson.setStatus(lessonDTO.getStatus());
-        lesson.setCourse(new Course(lessonDTO.getCourseId()));
-        lesson.setInstructor(new Instructor(lessonDTO.getInstructorId()));
-        lesson.setStudent(new Student(lessonDTO.getStudentId()));
+    public boolean updateLesson(LessonDTO dto) throws Exception {
+        Instructor instructor = instructorDAO.findById(dto.getInstructorId());
+        Course course = courseDAO.findById(dto.getCourseId());
+        Student student = studentDAO.findById(dto.getStudentId());
+
+        Lesson lesson = new Lesson(
+                dto.getLessonId(),
+                dto.getDate(),
+                dto.getTime(),
+                dto.getStatus(),
+                student,
+                course,
+                instructor
+        );
         return lessonDAO.update(lesson);
     }
 
     @Override
+    public ArrayList<LessonDTO> getAllLesson() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(LessonDTO lessonDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(LessonDTO lessonDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
     public boolean delete(Long id) throws SQLException, ClassNotFoundException {
-        return lessonDAO.delete(id);
+        return false;
     }
 
     @Override
     public ArrayList<LessonDTO> getAllLessons() {
         return null;
+    }
+
+    @Override
+    public boolean deleteLesson(String id) throws Exception {
+        return lessonDAO.delete(id);
+    }
+
+    @Override
+    public List<LessonDTO> findAll() {
+        return lessonDAO.getall().stream().map(lesson ->
+                new LessonDTO(
+                        lesson.getLessonID(),
+                        lesson.getDate(),
+                        lesson.getTime(),
+                        lesson.getStatus(),
+                        lesson.getStudent().getStudentId(),
+                        lesson.getCourse().getCourseId(),
+                        lesson.getInstructor().getInstructorId()
+                )).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllInstructorIds() throws SQLException, ClassNotFoundException {
+        List<Instructor> list = instructorDAO.getAll();
+        List<String> idList = new ArrayList<>();
+        for (Instructor i : list) {
+            idList.add(String.valueOf(i.getInstructorId()));
+        }
+        return idList;
+    }
+
+    @Override
+    public List<String> getAllCourseIds() throws Exception {
+        List<Course> list = courseDAO.getAll();
+        List<String> idList = new ArrayList<>();
+        for (Course i : list) {
+            idList.add(String.valueOf(i.getCourseId()));
+        }
+        return idList;
+    }
+
+    @Override
+    public List<String> getAllStudentIds() throws SQLException, ClassNotFoundException {
+        List<Student> list = studentDAO.getAll();
+        List<String> idList = new ArrayList<>();
+        for (Student i : list) {
+            idList.add(String.valueOf(i.getStudentId()));
+        }
+        return idList;
     }
 }

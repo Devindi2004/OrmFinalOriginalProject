@@ -107,4 +107,10 @@ public class CourseDAOImpl implements CourseDAO {
     public Course search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
+
+    public Course findById(long id) throws Exception {
+        try (Session session = FactoryConfigaration.getInstance().getSession().getSessionFactory().openSession()) {
+            return session.get(Course.class, id);
+        }
+    }
 }

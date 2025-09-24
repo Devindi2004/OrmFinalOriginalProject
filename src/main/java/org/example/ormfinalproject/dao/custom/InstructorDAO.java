@@ -5,4 +5,5 @@ import org.example.ormfinalproject.Entity.Instructor;
 
 public interface InstructorDAO extends CrudDAO<Instructor> {
     boolean delete(Long id);
+    Instructor findById(long id) throws Exception;
 }

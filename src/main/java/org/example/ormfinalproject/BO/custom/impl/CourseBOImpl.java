@@ -8,6 +8,7 @@ import org.example.ormfinalproject.model.CourseDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CourseBOImpl implements CourseBO {
 
@@ -25,6 +26,11 @@ public class CourseBOImpl implements CourseBO {
     }
 
     @Override
+    public List<CourseDTO> getAllCourses() throws SQLException, ClassNotFoundException {
+        return List.of();
+    }
+
+    @Override
     public boolean save(CourseDTO courseDTO) throws SQLException, ClassNotFoundException {
         return courseDAO.save(new Course(courseDTO.getCourseId(),courseDTO.getName(),courseDTO.getDuration(),courseDTO.getFee()));
     }
@@ -38,6 +44,11 @@ public class CourseBOImpl implements CourseBO {
             courseDTOS.add(new CourseDTO(c.getCourseId(),c.getName(),c.getDuration(),c.getFee()));
         }
         return courseDTOS;
+    }
+
+    @Override
+    public boolean delete(String id) throws Exception {
+        return false;
     }
 
 }

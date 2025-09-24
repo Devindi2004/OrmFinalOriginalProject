@@ -117,4 +117,10 @@ public class StudentDAOImpl implements StudentDAO {
     public Student search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
+
+    public Student findById(long id) throws Exception {
+        try (Session session = FactoryConfigaration.getInstance().getSession()) {
+            return session.get(Student.class, id);
+        }
+    }
 }

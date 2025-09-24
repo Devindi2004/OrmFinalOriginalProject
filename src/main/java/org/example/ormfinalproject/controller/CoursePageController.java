@@ -91,7 +91,7 @@ public class CoursePageController {
     }
 
     @FXML
-    void handleAddCourse(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void handleAddCourse(ActionEvent event) throws Exception {
         if (txtCourseId.getText().isEmpty() || txtCourseName.getText().isEmpty()
                 || txtDuration.getText().isEmpty() || txtFees.getText().isEmpty()) {
             new Alert(Alert.AlertType.WARNING, "Please fill all fields!").show();
@@ -195,7 +195,7 @@ public class CoursePageController {
         }
     }
 
-    public void handleSaveCourse(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void handleSaveCourse(ActionEvent actionEvent) throws Exception {
         String name = txtCourseName.getText();
         String duration = txtDuration.getText();
         String fee = txtFees.getText();
