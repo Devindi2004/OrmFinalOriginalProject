@@ -185,7 +185,7 @@ public class DashBoardController {
     }
 
     public void setLesson() throws SQLException, ClassNotFoundException {
-        ArrayList<LessonDTO> allLesson = lessonBO.getAllLesson();
+        ArrayList<LessonDTO> allLesson = (ArrayList<LessonDTO>) lessonBO.findAll();
         lblTotalLessons.setText(String.valueOf(allLesson != null ? allLesson.size() : 0));
     }
 

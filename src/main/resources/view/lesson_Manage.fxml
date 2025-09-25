@@ -129,7 +129,7 @@
         </HBox>
 
         <!-- Table -->
-        <TableView fx:id="tblPayments" onMouseClicked="#ClickOnAction" prefHeight="172.0" prefWidth="870.0" style="-fx-background-color: #ffffff; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-table-cell-border-color: transparent;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblLesson" onMouseClicked="#ClickOnAction" prefHeight="172.0" prefWidth="870.0" style="-fx-background-color: #ffffff; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-table-cell-border-color: transparent;" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colLessonId" minWidth="120" prefWidth="120" text="Lesson ID" />
                 <TableColumn fx:id="colDate" minWidth="140" prefWidth="140" text="Date" />

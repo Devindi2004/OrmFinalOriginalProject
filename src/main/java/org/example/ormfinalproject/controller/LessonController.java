@@ -153,13 +153,13 @@ public class LessonController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colLessonId.setCellValueFactory(new PropertyValueFactory<>("lessonID"));
+        colLessonId.setCellValueFactory(new PropertyValueFactory<>("lessonId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentID"));
-        colCourseId.setCellValueFactory(new PropertyValueFactory<>("courseID"));
-        colInstructorId.setCellValueFactory(new PropertyValueFactory<>("instructorID"));
+        colCourseId.setCellValueFactory(new PropertyValueFactory<>("courseId"));
+        colInstructorId.setCellValueFactory(new PropertyValueFactory<>("instructorId"));
+        colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
         loadAllLessons();
         loadCourseIds();
@@ -222,14 +222,21 @@ public class LessonController implements Initializable {
 
     public void handleAddPayment(ActionEvent actionEvent) {
         try {
+            System.out.println(   "chek one "+Long.parseLong( cbStudentId.getSelectionModel().getSelectedItem())
+                    );
+            Long studentId = Long.parseLong( cbStudentId.getSelectionModel().getSelectedItem());
+            System.out.println("student.... "+studentId);
             LessonDTO dto = new LessonDTO(
                     Date.valueOf(dpDate.getValue()),
                     txtTime.getText(),
                     txtStatus.getText(),
-                    Long.parseLong( cbStudentId.getSelectionModel().getSelectedItem()),
                     Long.parseLong( cmCourseId.getSelectionModel().getSelectedItem()),
-                    Long.parseLong( cmInstructorId.getSelectionModel().getSelectedItem())
-            );
+                    Long.parseLong( cmInstructorId.getSelectionModel().getSelectedItem()),
+                    studentId
+
+                    );
+            System.out.println(dto.getLessonId());
+            System.out.println(dto.getLessonId()+""+dto.getDate()+""+dto.getTime()+""+dto.getStatus()+""+dto.getStudentId()+""+dto.getCourseId()+""+dto.getInstructorId()+"controller");
             if (lessonBO.saveLesson(dto)) {
                 showInfo("Lesson added successfully!");
                 loadAllLessons();

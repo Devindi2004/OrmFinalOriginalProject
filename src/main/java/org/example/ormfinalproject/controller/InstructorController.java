@@ -96,17 +96,18 @@ public class InstructorController {
 
     @FXML
     void handleAddPayment(ActionEvent event) throws SQLException, ClassNotFoundException {
-//        long instructorId = parseLong(txtInstructorId.getText());
+        long instructorId = parseLong(txtInstructorId.getText());
         String name = txtName.getText();
         String email = txtEmail.getText();
         String phone = txtPhone.getText();
         String availability = txtAvailability.getText();
 
         InstructorDTO instructorDTO = new InstructorDTO(
-//                instructorId,
+                instructorId,
                 name,
                 email,
-                phone
+                phone,
+                availability
         );
 
         boolean isSave = instructorBO.save(instructorDTO);

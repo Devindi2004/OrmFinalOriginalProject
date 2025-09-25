@@ -24,7 +24,19 @@ public class StudentBOImpl implements StudentBO {
         }
         return studentDTOS;
     }
-
+    @Override
+    public StudentDTO findById(String id) throws Exception {
+        Student student = studentDAO.findById(Long.parseLong(id));
+        if (student == null) return null;
+        return new StudentDTO(
+                student.getStudentId(),
+                student.getName(),
+                student.getEmail(),
+                student.getPhone(),
+                student.getAddress(),
+                student.getRegisterFee(),
+                student.getRegistrationDate());
+    }
 //    @Override
 //    public String getNextId() throws SQLException, ClassNotFoundException {
 //        return studentDAO.generateNewId();

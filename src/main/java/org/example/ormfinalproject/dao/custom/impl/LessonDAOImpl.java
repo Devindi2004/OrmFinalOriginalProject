@@ -1,6 +1,9 @@
 package org.example.ormfinalproject.dao.custom.impl;
 
+import org.example.ormfinalproject.Entity.Course;
+import org.example.ormfinalproject.Entity.Instructor;
 import org.example.ormfinalproject.Entity.Lesson;
+import org.example.ormfinalproject.Entity.Student;
 import org.example.ormfinalproject.config.FactoryConfigaration;
 import org.example.ormfinalproject.dao.custom.LessonDAO;
 import org.hibernate.Session;
@@ -25,6 +28,7 @@ public class LessonDAOImpl implements LessonDAO {
     @Override
     public boolean save(Lesson lesson) throws SQLException {
         try (Session session = factoryConfiguration.getSession()) {
+            System.out.println(lesson.toString());
             Transaction tx = session.beginTransaction();
             session.persist(lesson);
             tx.commit();
@@ -35,26 +39,30 @@ public class LessonDAOImpl implements LessonDAO {
         }
     }
 
-    @Override
-    public ArrayList<Lesson> getall() {
-        Session session = factoryConfiguration.getSession();
-        List<Lesson> list = session.createQuery("FROM Lesson", Lesson.class).list();
-        session.close();
-        return (ArrayList<Lesson>) list;
-    }
+//    @Override
+//    public boolean save(Lesson lesson) throws SQLException {
+//        try (Session session = factoryConfiguration.getSession()) {
+//            Transaction tx = session.beginTransaction();
+//
+//            // Reattach entities to this session
+//            Student managedStudent = session.merge(lesson.getStudent());
+//            Course managedCourse = session.merge(lesson.getCourse());
+//            Instructor managedInstructor = session.merge(lesson.getInstructor());
+//
+//            lesson.setStudent(managedStudent);
+//            lesson.setCourse(managedCourse);
+//            lesson.setInstructor(managedInstructor);
+//
+//            session.persist(lesson);
+//
+//            tx.commit();
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
-    @Override
-    public boolean delete(String id) {
-        Session session = factoryConfiguration.getSession();
-        Transaction tx = session.beginTransaction();
-        Lesson lesson = session.get(Lesson.class, Long.parseLong(id));
-        if (lesson != null) {
-            session.remove(lesson);
-        }
-        tx.commit();
-        session.close();
-        return lesson != null;
-    }
 
     @Override
     public boolean update(Lesson lesson) {
@@ -73,7 +81,15 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public boolean delete(long id) throws SQLException, ClassNotFoundException {
-        return false;
+        Session session = factoryConfiguration.getSession();
+        Transaction tx = session.beginTransaction();
+        Lesson lesson = session.get(Lesson.class, Long.parseLong(String.valueOf(id)));
+        if (lesson != null) {
+            session.remove(lesson);
+        }
+        tx.commit();
+        session.close();
+        return lesson != null;
     }
 
     @Override

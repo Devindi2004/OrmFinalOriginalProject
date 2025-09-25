@@ -1,5 +1,6 @@
 package org.example.ormfinalproject.dao.custom.impl;
 
+import org.example.ormfinalproject.Entity.Course;
 import org.example.ormfinalproject.dao.custom.StudentDAO;
 import org.example.ormfinalproject.Entity.Student;
 import org.example.ormfinalproject.config.FactoryConfigaration;
@@ -118,8 +119,9 @@ public class StudentDAOImpl implements StudentDAO {
         return null;
     }
 
+    @Override
     public Student findById(long id) throws Exception {
-        try (Session session = FactoryConfigaration.getInstance().getSession()) {
+        try (Session session = FactoryConfigaration.getInstance().getSession().getSessionFactory().openSession()) {
             return session.get(Student.class, id);
         }
     }

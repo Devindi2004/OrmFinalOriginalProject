@@ -29,7 +29,10 @@ public class LessonBOImpl implements LessonBO {
     public boolean saveLesson(LessonDTO dto) throws Exception {
         Instructor instructor = instructorDAO.findById(dto.getInstructorId());
         Course  course = courseDAO.findById(dto.getCourseId());
+        System.out.println(dto.getStudentId()+"dto student id");
         Student student = studentDAO.findById(dto.getStudentId());
+        System.out.println(student+" st");
+        System.out.println(dto.getLessonId()+""+dto.getDate()+""+dto.getTime()+""+dto.getStatus()+""+dto.getStudentId()+""+dto.getCourseId()+""+dto.getInstructorId()+"boImpl");
         Lesson lesson = new Lesson(
             dto.getLessonId(),
                 dto.getDate(),
@@ -60,39 +63,16 @@ public class LessonBOImpl implements LessonBO {
         return lessonDAO.update(lesson);
     }
 
-    @Override
-    public ArrayList<LessonDTO> getAllLesson() throws SQLException, ClassNotFoundException {
-        return null;
-    }
 
-    @Override
-    public boolean save(LessonDTO lessonDTO) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public boolean update(LessonDTO lessonDTO) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public ArrayList<LessonDTO> getAllLessons() {
-        return null;
-    }
 
     @Override
     public boolean deleteLesson(String id) throws Exception {
-        return lessonDAO.delete(id);
+        return lessonDAO.delete(Long.parseLong(id));
     }
 
     @Override
-    public List<LessonDTO> findAll() {
-        return lessonDAO.getall().stream().map(lesson ->
+    public List<LessonDTO> findAll() throws SQLException, ClassNotFoundException {
+        return lessonDAO.getAll().stream().map(lesson ->
                 new LessonDTO(
                         lesson.getLessonID(),
                         lesson.getDate(),

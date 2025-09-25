@@ -3,6 +3,8 @@ package org.example.ormfinalproject.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,10 +27,19 @@ public class Instructor {
     @Column(length = 15)
     private String phone;
 
-    @Column(nullable = true, length = 100)
+    @Column(nullable = false, length = 100)
     private String availability;
 
-    public Instructor(long instructorId) {
+    public Instructor(long instructorId, String name, String email, String phone, String availability) {
         this.instructorId = instructorId;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.availability = availability;
     }
+
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lesson> lessons = new java.util.ArrayList<>();
+
+
 }

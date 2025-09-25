@@ -16,7 +16,6 @@ public class CourseBOImpl implements CourseBO {
 
     @Override
     public boolean update(CourseDTO courseDTO) throws SQLException, ClassNotFoundException {
-        System.out.println("qwwwwww"+courseDTO.getCourseId());
         return courseDAO.update(new Course(courseDTO.getCourseId(),courseDTO.getName(),courseDTO.getDuration(),courseDTO.getFee()));
     }
 

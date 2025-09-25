@@ -28,6 +28,5 @@ public class StudentDTO {
         this.registrationDate = registrationDate;
     }
 
-    public StudentDTO(long studentId, String name, String email, String phone, String registerFee, String registrationDate) {
-    }
+
 }
