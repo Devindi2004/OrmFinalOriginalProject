@@ -3,15 +3,17 @@ package org.example.ormfinalproject.BO.custom;
 import org.example.ormfinalproject.BO.SuperBO;
 import org.example.ormfinalproject.model.PaymentDTO;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface PaymentBO extends SuperBO {
-    ArrayList<PaymentDTO> getAllPayment() throws SQLException, ClassNotFoundException;
+    boolean savePayment(PaymentDTO dto) throws Exception;
+    boolean updatePayment(PaymentDTO dto) throws Exception;
+    boolean deletePayment(String id) throws Exception;
+    List<PaymentDTO> getAll() throws Exception;
 
-    boolean delete(Long id) throws SQLException, ClassNotFoundException;
+    ArrayList<PaymentDTO> getAllPayments() throws Exception;
 
-    boolean save(PaymentDTO paymentDTO) throws SQLException, ClassNotFoundException;
-
-    boolean update(PaymentDTO paymentDTO) throws SQLException, ClassNotFoundException;
+    List<String> getAllStudentIds() throws Exception;
+    List<String> getAllCourseIds() throws Exception;
 }

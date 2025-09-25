@@ -14,23 +14,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.ormfinalproject.BO.custom.BOFactory;
-import org.example.ormfinalproject.BO.custom.CourseBO;
 import org.example.ormfinalproject.BO.custom.PaymentBO;
-import org.example.ormfinalproject.model.CourseDTO;
 import org.example.ormfinalproject.model.PaymentDTO;
-import org.example.ormfinalproject.model.StudentDTO;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Optional;
-
+import java.util.List;
 
 public class PaymentController {
 
-    public ComboBox cbStudentID;
-    public ComboBox cbCourseid;
     PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PAYMENT);
 
     @FXML
@@ -49,7 +42,13 @@ public class PaymentController {
     private Button btnUpdate;
 
     @FXML
+    private ComboBox<String> cbCourseid;
+
+    @FXML
     private ComboBox<String> cbMethod;
+
+    @FXML
+    private ComboBox<String> cbStudentID;
 
     @FXML
     private TableColumn<?, ?> clmAmount;
@@ -82,35 +81,11 @@ public class PaymentController {
     private TextField txtAmount;
 
     @FXML
-    private TextField txtCourseId;
-
-    @FXML
     private TextField txtPaymentId;
 
-    @FXML
-    private TextField txtStudentId;
-
-    public void initialize() throws SQLException, ClassNotFoundException {
-        loadtable();
+    public void initialize() {
+        loadAllPayments();
         setCellValueFactory();
-        setPaymentComboBox();
-    }
-
-    private void setPaymentComboBox() {
-        ObservableList<String> paymentMethods = FXCollections.observableArrayList("Cash", "Card", "Online");
-        cbMethod.setItems(paymentMethods);
-    }
-
-    private void loadtable() throws SQLException, ClassNotFoundException {
-        ArrayList<PaymentDTO> paymentDTOS = paymentBO.getAllPayment();
-
-        ObservableList<PaymentDTO> data = FXCollections.observableArrayList();
-
-        for (PaymentDTO paymentDTO : paymentDTOS) {
-            data.add(paymentDTO);
-        }
-
-        tblPayment.setItems(data);
     }
 
     private void setCellValueFactory() {
@@ -120,14 +95,40 @@ public class PaymentController {
         clmPDate.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
         clmAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         clmPaymenMethodtId.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
+
+        loadAllPayments();
+
+        cbMethod.setItems(FXCollections.observableArrayList("Cash", "Card").sorted());
+        loadStudentIds();
+        loadCourseIds();
+    }
+
+    private void loadAllPayments() {
+        try {
+            List<PaymentDTO> all = paymentBO.getAll();
+            ObservableList<PaymentDTO> list = FXCollections.observableArrayList();
+            for (PaymentDTO dto : all) {
+                list.add(new PaymentDTO(
+                        dto.getPaymentId(),
+                        dto.getPaymentDate(),
+                        dto.getPaymentMethod(),
+                        dto.getAmount(),
+                        dto.getStudentId(),
+                        dto.getCourseId()
+                ));
+            }
+            tblPayment.setItems(list);
+        } catch (Exception e) {
+            showError("Error loading payments: " + e.getMessage());
+        }
     }
 
     @FXML
-    void handleBackButton(MouseEvent mouseEvent) throws IOException {
+    void handleBackButton(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashBoard.fxml"));
         Parent root = loader.load();
 
-        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.centerOnScreen();
         stage.setTitle("Dashboard");
@@ -136,112 +137,126 @@ public class PaymentController {
 
     @FXML
     void handleClear(ActionEvent event) {
+        clearFields();
+    }
+
+    private void clearFields() {
         txtPaymentId.clear();
-        cbStudentID.setValue(null);
-        cbCourseid.setValue(null);
+        dpPaymentDate.setValue(null);
         txtAmount.clear();
         cbMethod.setValue(null);
-        dpPaymentDate.setValue(null);
+        cbStudentID.setValue(null);
+        cbCourseid.setValue(null);
     }
 
     @FXML
-    void handleDeletePayment(ActionEvent event) throws SQLException, ClassNotFoundException {
-        Long id = Long.valueOf(txtStudentId.getText());
-
-        if (id == null) {
-            new Alert(Alert.AlertType.WARNING, "Please select a class to delete.", ButtonType.OK).show();
-            return;
-        }
-
-        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmAlert.setTitle("Delete Confirmation");
-        confirmAlert.setHeaderText(null);
-        confirmAlert.setContentText("Are you sure you want to delete the class with ID: " + id + "?");
-
-        Optional<ButtonType> result = confirmAlert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            boolean isDelete = paymentBO.delete(id);
-            if (isDelete) {
-                loadtable();
-                new Alert(Alert.AlertType.INFORMATION, "Deleted Successfully").show();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Deleting Failed").show();
+    void handleDeletePayment(ActionEvent event) {
+        try {
+            String id = txtPaymentId.getText();
+            if (id.isEmpty()) {
+                showError("Please select a payment to delete!");
+                return;
             }
-        } else {
-            new Alert(Alert.AlertType.INFORMATION, "Deletion Cancelled").show();
+
+            if (paymentBO.deletePayment(id)) {
+                showInfo("Payment deleted successfully!");
+                loadAllPayments();
+                clearFields();
+            } else {
+                showError("Payment not found or cannot be deleted!");
+            }
+        } catch (Exception e) {
+            showError("Error deleting payment: " + e.getMessage());
         }
     }
 
     @FXML
-    void handleSavePayment(ActionEvent event) throws SQLException, ClassNotFoundException {
-       String paymentId = txtPaymentId.getText();
-       String studentId = cbStudentID.getValue().toString();
-       String courseId = cbCourseid.getValue().toString();
-       String amount = txtAmount.getText();
-       String paymentMethod = cbMethod.getValue().toString();
-       String paymentDate = dpPaymentDate.getValue().toString();
+    void handleSavePayment(ActionEvent event) {
+        try {
+            Date date = Date.valueOf(dpPaymentDate.getValue());
+            String method = cbMethod.getSelectionModel().getSelectedItem();
+            String amount = txtAmount.getText();
+            String studentId = cbStudentID.getSelectionModel().getSelectedItem(); // FIX
+            String courseId = cbCourseid.getSelectionModel().getSelectedItem();   // FIX
 
-       PaymentDTO paymentDTO = new PaymentDTO(
-                Long.valueOf(paymentId),
-                Long.valueOf(studentId),
-                Long.valueOf(courseId),
-                amount,
-                paymentMethod,
-                paymentDate
-        );
+            PaymentDTO dto = new PaymentDTO(
+                    date,
+                    studentId,
+                    courseId,
+                    method,
+                    amount
+            );
 
-        boolean isSave = paymentBO.save(paymentDTO);
-
-        if (isSave) {
-            loadtable();
-            new Alert(Alert.AlertType.INFORMATION, "Saved Successfully").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Saving Failed").show();
+            System.out.println(dto + " controller");
+            if (paymentBO.savePayment(dto)) {
+                showInfo("Payment added successfully!");
+                loadAllPayments();
+                clearFields();
+            }
+        } catch (Exception e) {
+            showError("Error saving payment: " + e.getMessage());
         }
-
     }
 
     @FXML
-    void handleUpdatePayment(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String paymentId = txtPaymentId.getText();
-        String studentId = cbStudentID.getValue().toString();
-        String courseId = cbCourseid.getValue().toString();
-        String amount = txtAmount.getText();
-        String paymentMethod = cbMethod.getValue().toString();
-        String paymentDate = dpPaymentDate.getValue().toString();
+    void handleUpdatePayment(ActionEvent event) {
+        try {
+            long id = Long.parseLong(txtPaymentId.getText());
+            PaymentDTO dto = new PaymentDTO(
+                    Date.valueOf(dpPaymentDate.getValue()),
+                    cbStudentID.getSelectionModel().getSelectedItem(),
+                    cbCourseid.getSelectionModel().getSelectedItem(),
+                    cbMethod.getSelectionModel().getSelectedItem(),
+                    txtAmount.getText()
+            );
+            dto.setPaymentId(id);
 
-        PaymentDTO paymentDTO = new PaymentDTO(
-                Long.valueOf(paymentId),
-                Long.valueOf(studentId),
-                Long.valueOf(courseId),
-                amount,
-                paymentMethod,
-                paymentDate
-        );
-
-        boolean isUpdate = paymentBO.update(paymentDTO);
-        if (isUpdate) {
-            loadtable();
-            new Alert(Alert.AlertType.INFORMATION, "Updated Successfully").show();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Update Failed").show();
+            if (paymentBO.updatePayment(dto)) {
+                showInfo("Payment updated successfully!");
+                loadAllPayments();
+                clearFields();
+            }
+        } catch (Exception e) {
+            showError("Error updating payment: " + e.getMessage());
         }
-
     }
 
     @FXML
     void tableClickOnAction(MouseEvent event) {
-        PaymentDTO selectedItem = tblPayment.getSelectionModel().getSelectedItem();
-
-        if (selectedItem != null) {
-            txtPaymentId.setText(String.valueOf(selectedItem.getPaymentId()));
-            txtAmount.setText(String.valueOf(selectedItem.getAmount()));
-            dpPaymentDate.setValue(LocalDate.parse(selectedItem.getPaymentDate()));
-            cbStudentID.setValue(selectedItem.getStudentId());
-            cbCourseid.setValue(selectedItem.getCourseId());
-            cbMethod.setValue(selectedItem.getPaymentMethod());
+        PaymentDTO selected = tblPayment.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            txtPaymentId.setText(String.valueOf(selected.getPaymentId()));
+            dpPaymentDate.setValue(LocalDate.parse(selected.getPaymentDate()));
+            txtAmount.setText(selected.getAmount());
+            cbMethod.getSelectionModel().select(selected.getPaymentMethod()); // FIX
+            cbStudentID.getSelectionModel().select(String.valueOf(selected.getStudentId())); // FIX
+            cbCourseid.getSelectionModel().select(String.valueOf(selected.getCourseId()));   // FIX
         }
     }
 
+    private void showInfo(String msg) {
+        new Alert(Alert.AlertType.INFORMATION, msg).show();
+    }
+
+    private void showError(String msg) {
+        new Alert(Alert.AlertType.ERROR, msg).show();
+    }
+
+    private void loadStudentIds() {
+        try {
+            List<String> ids = paymentBO.getAllStudentIds();
+            cbStudentID.setItems(FXCollections.observableArrayList(ids));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadCourseIds() {
+        try {
+            List<String> ids = paymentBO.getAllCourseIds();
+            cbCourseid.setItems(FXCollections.observableArrayList(ids));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -15,7 +15,7 @@ public class CourseBOImpl implements CourseBO {
     CourseDAO courseDAO = (CourseDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.COURSE);
 
     @Override
-    public boolean update(CourseDTO courseDTO) throws SQLException, ClassNotFoundException {
+    public boolean update(CourseDTO courseDTO) throws Exception {
         return courseDAO.update(new Course(courseDTO.getCourseId(),courseDTO.getName(),courseDTO.getDuration(),courseDTO.getFee()));
     }
 

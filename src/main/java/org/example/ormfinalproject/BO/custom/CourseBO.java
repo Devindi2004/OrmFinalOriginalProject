@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface CourseBO extends SuperBO {
-    boolean update(CourseDTO courseDTO) throws SQLException, ClassNotFoundException;
+    boolean update(CourseDTO courseDTO) throws Exception;
 
     boolean delete(Long id) throws SQLException, ClassNotFoundException;
 

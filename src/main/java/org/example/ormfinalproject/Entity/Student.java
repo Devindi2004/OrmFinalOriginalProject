@@ -3,6 +3,7 @@ package org.example.ormfinalproject.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -44,4 +45,8 @@ public class Student {
     public Student(long studentId) {
         this.studentId = studentId;
     }
+
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn( name = "student_id")
+    private List<Payment> payments = new ArrayList<>();
 }

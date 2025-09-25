@@ -110,6 +110,8 @@ public class DashBoardController {
             setUser("Guest"); // Default username if not set
         } catch (SQLException | ClassNotFoundException e) {
             showAlert(Alert.AlertType.ERROR, "Initialization Error", "Failed to load dashboard data: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -189,8 +191,8 @@ public class DashBoardController {
         lblTotalLessons.setText(String.valueOf(allLesson != null ? allLesson.size() : 0));
     }
 
-    public void setPayment() throws SQLException, ClassNotFoundException {
-        ArrayList<PaymentDTO> allPayment = paymentBO.getAllPayment();
+    public void setPayment() throws Exception {
+        ArrayList<PaymentDTO> allPayment = paymentBO.getAllPayments();
         lblTotalPayments.setText(String.valueOf(allPayment != null ? allPayment.size() : 0));
     }
 

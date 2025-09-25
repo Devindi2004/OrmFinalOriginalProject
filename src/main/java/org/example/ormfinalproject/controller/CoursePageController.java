@@ -157,7 +157,7 @@ public class CoursePageController {
     }
 
     @FXML
-    void handleUpdateCourse(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void handleUpdateCourse(ActionEvent event) throws Exception {
         long courseId = Long.parseLong(txtCourseId.getText());
         String name = txtCourseName.getText();
         String duration = txtDuration.getText();

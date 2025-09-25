@@ -40,4 +40,7 @@ public class Course {
     public Course(long courseId) {
         this.courseId = courseId;
     }
+    // Bidirectional 1:1 (inverse side)
+    @OneToOne(mappedBy = "course", orphanRemoval = true)
+    private Payment payment;
 }

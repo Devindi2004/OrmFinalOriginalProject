@@ -53,7 +53,7 @@ public class StudentBOImpl implements StudentBO {
     }
 
     @Override
-    public boolean update(StudentDTO studentDTO) throws SQLException, ClassNotFoundException {
+    public boolean update(StudentDTO studentDTO) throws Exception {
         return studentDAO.update(new Student(studentDTO.getStudentId(),studentDTO.getName(),studentDTO.getEmail(),studentDTO.getPhone(),studentDTO.getAddress(),studentDTO.getRegisterFee(),studentDTO.getRegistrationDate()));
     }
 }

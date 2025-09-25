@@ -167,7 +167,7 @@ public class UserPageController {
     }
 
     @FXML
-    void handleUpdateUser(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void handleUpdateUser(ActionEvent event) throws Exception {
         String name = txtUserName.getText();
         String password = txtPassword.getText();
         String role = txtRole.getText();

@@ -159,7 +159,7 @@ public class InstructorController {
     }
 
     @FXML
-    void handleUpdatePayment(ActionEvent event) throws ClassNotFoundException, SQLException {
+    void handleUpdatePayment(ActionEvent event) throws Exception {
         long instructorId = parseLong(txtInstructorId.getText());
         String name = txtName.getText();
         String email = txtEmail.getText();

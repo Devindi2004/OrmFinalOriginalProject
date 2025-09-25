@@ -38,7 +38,7 @@ public class InstructorBOImpl implements InstructorBO {
     }
 
     @Override
-    public boolean update(InstructorDTO i) throws SQLException, ClassNotFoundException {
+    public boolean update(InstructorDTO i) throws Exception {
         return instructorDAO.update(new Instructor(i.getInstructorId(),i.getName(),i.getEmail(),i.getPhone(), i.getAvailability()));
     }
 }
