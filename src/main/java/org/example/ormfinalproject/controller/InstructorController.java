@@ -94,13 +94,36 @@ public class InstructorController {
         colAvailability.setCellValueFactory(new PropertyValueFactory<>("availability"));
     }
 
+    private boolean isInputValid() {
+        String instructorId = txtInstructorId.getText().trim();
+        String name = txtName.getText().trim();
+        
+        if (instructorId.isEmpty() || name.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Instructor ID and Name cannot be empty").show();
+            return false;
+        }
+        
+        try {
+            Long.parseLong(instructorId);
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Instructor ID must be a valid number").show();
+            return false;
+        }
+        
+        return true;
+    }
+
     @FXML
     void handleAddPayment(ActionEvent event) throws SQLException, ClassNotFoundException {
-        long instructorId = parseLong(txtInstructorId.getText());
-        String name = txtName.getText();
-        String email = txtEmail.getText();
-        String phone = txtPhone.getText();
-        String availability = txtAvailability.getText();
+        if (!isInputValid()) {
+            return;
+        }
+        
+        long instructorId = Long.parseLong(txtInstructorId.getText().trim());
+        String name = txtName.getText().trim();
+        String email = txtEmail.getText().trim();
+        String phone = txtPhone.getText().trim();
+        String availability = txtAvailability.getText().trim();
 
         InstructorDTO instructorDTO = new InstructorDTO(
                 instructorId,

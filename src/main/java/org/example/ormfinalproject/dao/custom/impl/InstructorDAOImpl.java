@@ -37,6 +37,7 @@ public class InstructorDAOImpl implements InstructorDAO {
 
     @Override
     public boolean save(Instructor instructorDTO) throws SQLException, ClassNotFoundException {
+        System.out.println("DAO called");
         Session session = FactoryConfigaration.getInstance().getSession();
         session.beginTransaction();
         session.save(instructorDTO);
