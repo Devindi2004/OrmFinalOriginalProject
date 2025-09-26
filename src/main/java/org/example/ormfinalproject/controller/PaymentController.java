@@ -178,7 +178,7 @@ public class PaymentController {
             String amount = txtAmount.getText();
             String studentId = cbStudentID.getSelectionModel().getSelectedItem(); // FIX
             String courseId = cbCourseid.getSelectionModel().getSelectedItem();   // FIX
-
+            System.out.println(date + " " + method + " " + amount + " " + studentId + " " + courseId);
             PaymentDTO dto = new PaymentDTO(
                     date,
                     studentId,
